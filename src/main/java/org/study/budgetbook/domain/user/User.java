@@ -18,6 +18,7 @@ public class User extends BaseEntity {
     private String email;
     private String password;
     private String nickname;
+    @Enumerated(EnumType.STRING)
     private Role role;
     private boolean deletedYn = false;
 
