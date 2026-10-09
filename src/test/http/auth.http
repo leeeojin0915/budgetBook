@@ -14,11 +14,11 @@ Content-Type: application/json
 
 {
   "email": "test@test.com",
-  "password": "newpassword123"
+  "password": "test1234"
 }
 
 ### 정보조회
-@access_token = eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTc5MDA0NDU3NCwiZXhwIjoxNzkwMDQ1NDc0fQ.feNU4wI9UL6aU5jl_ZJIeCdeMdrbeWR4ThPWSGOl_f8wiP0I7L1MOKV70RfZV6Mf
+@access_token = eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTc5MTUyMDY1MSwiZXhwIjoxNzkxNTIxNTUxfQ.7XfVCc1WHkHG3tFVvo6wS_Fw6PXGJudHQU9EvY_9biD5L6N7jS73u5fEa1ox-JWJ
 GET http://localhost:8080/api/users/info
 Authorization: Bearer {{access_token}}
 

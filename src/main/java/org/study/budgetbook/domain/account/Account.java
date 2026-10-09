@@ -5,28 +5,33 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.study.budgetbook.domain.common.BaseEntity;
 import org.study.budgetbook.domain.user.User;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name="accounts")
-public class Account {
+public class Account extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     // 지연 로딩 : Account 조회시 User를 즉시 조인하지 않음 -> 불필요한 쿼리 방
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
+
     private String name;
     private BigDecimal balance = BigDecimal.ZERO;
     @Enumerated(EnumType.STRING)
-    private AccountType accountType;
+    private AccountType type;
     private String currency = "KRW";
     private boolean deleted = false;
+    private LocalDateTime createdAt;
 
     public enum AccountType{
         CHECKING, // 입출금
@@ -36,11 +41,11 @@ public class Account {
     }
 
     @Builder
-    public Account(User user, String name, BigDecimal balance, AccountType accountType, String currency) {
+    public Account(User user, String name, BigDecimal balance, AccountType type, String currency) {
         this.user = user;
         this.name = name;
         this.balance = balance != null ? balance : BigDecimal.ZERO;
-        this.accountType = accountType;
+        this.type = type;
         this.currency = currency != null ? currency : "KRW";
     }
 
@@ -48,9 +53,9 @@ public class Account {
     /*
     * 도메인 메서드
     * */
-    public void updateInfo(String name, AccountType accountType) {
+    public void updateInfo(String name, AccountType type) {
         this.name = name;
-        this.accountType = accountType;
+        this.type = type;
     }
 
     public void adjustBalance(BigDecimal amount){

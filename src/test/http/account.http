@@ -1,0 +1,94 @@
+### 토큰 변수 (로그인 후 발급받은 토큰 붙여넣기)
+@access_token = eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwicm9sZSI6IlJPTEVfVVNFUiIsImlhdCI6MTc5MTUyMTA1MSwiZXhwIjoxNzkxNTIxOTUxfQ._TMpofecOjUr3zK9KE1ATGD7j1BigKawxyT6MZz-kOFcBZ-ieu6epn6W3XbohPAt
+
+### ──────────────────────────────
+### 1. 계좌 등록 (입출금 통장)
+### ──────────────────────────────
+POST http://localhost:8080/api/accounts
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "name": "카카오뱅크 입출금",
+  "type": "CHECKING",
+  "balance": 1000000,
+  "currency": "KRW"
+}
+
+### ──────────────────────────────
+### 2. 계좌 등록 (저축 계좌)
+### ──────────────────────────────
+POST http://localhost:8080/api/accounts
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "name": "토스 저축",
+  "type": "SAVINGS",
+  "balance": 500000,
+  "currency": "KRW"
+}
+
+### ──────────────────────────────
+### 3. 내 계좌 목록 조회
+### ──────────────────────────────
+GET http://localhost:8080/api/accounts
+Authorization: Bearer {{access_token}}
+
+### ──────────────────────────────
+### 4. 계좌 단건 조회
+### ──────────────────────────────
+GET http://localhost:8080/api/accounts/1
+Authorization: Bearer {{access_token}}
+
+### ──────────────────────────────
+### 5. 계좌 수정
+### ──────────────────────────────
+PUT http://localhost:8080/api/accounts/1
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "name": "카카오뱅크 수정",
+  "type": "CHECKING"
+}
+
+### ──────────────────────────────
+### 6. 잔액 수동 조정 (50,000원 추가)
+### ──────────────────────────────
+PUT http://localhost:8080/api/accounts/1/balance
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "amount": 50000
+}
+
+### ──────────────────────────────
+### 7. 잔액 수동 조정 (30,000원 차감)
+### ──────────────────────────────
+PUT http://localhost:8080/api/accounts/1/balance
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "amount": -30000
+}
+
+### ──────────────────────────────
+### 8. 타인 계좌 접근 시도 (보안 확인)
+### ──────────────────────────────
+GET http://localhost:8080/api/accounts/999
+Authorization: Bearer {{access_token}}
+
+### ──────────────────────────────
+### 9. 계좌 삭제
+### ──────────────────────────────
+DELETE http://localhost:8080/api/accounts/1
+Authorization: Bearer {{access_token}}
+
+### ──────────────────────────────
+### 10. 삭제된 계좌 조회 (실패해야 정상)
+### ──────────────────────────────
+GET http://localhost:8080/api/accounts/2
+Authorization: Bearer {{access_token}}
